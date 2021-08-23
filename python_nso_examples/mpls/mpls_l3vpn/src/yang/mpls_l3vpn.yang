@@ -1,49 +1,91 @@
 module mpls_l3vpn {
 
-  namespace "http://example.com/mpls_l3vpn";
+  namespace "http://com/example/mpls_l3vpn";
   prefix mpls_l3vpn;
 
   import ietf-inet-types {
     prefix inet;
   }
+
   import tailf-common {
     prefix tailf;
   }
+
   import tailf-ncs {
     prefix ncs;
   }
 
-  description
-    "Bla bla...";
-
-  revision 2016-01-01 {
-    description
-      "Initial revision.";
-  }
-
-  list mpls_l3vpn {
-    description "This is an RFS skeleton service";
-
-    key name;
-    leaf name {
-      tailf:info "Unique service id";
-      tailf:cli-allow-range;
+grouping endpoint-grouping {
+    leaf interface-name {
+      tailf:info "Interface name. For example FastEthernet.";
       type string;
     }
 
-    uses ncs:service-data;
-    ncs:servicepoint mpls_l3vpn-servicepoint;
-
-    // may replace this with other ways of refering to the devices.
-    leaf-list device {
-      type leafref {
-        path "/ncs:devices/ncs:device/ncs:name";
-      }
+    leaf interface-number {
+      tailf:info "Interface number. For example 0 or 1/0";
+      type string;
     }
-
-    // replace with your own stuff here
-    leaf dummy {
+    leaf ip-address {
+      tailf:info "Local interface address.";
       type inet:ipv4-address;
+    }
+  }
+
+
+  container vpn {
+
+    list mpls_l3vpn {
+      description "Layer3 VPN";
+
+      key name;
+      leaf name {
+        tailf:info "Unique service id";
+        tailf:cli-allow-range;
+        type string;
+      }
+
+      uses ncs:service-data;
+      ncs:servicepoint  "mpls_l3vpn-template";
+
+      list endpoint {
+        key "id";
+        leaf id{
+          tailf:info "Endpoint identifier";
+          type string;
+        }
+        leaf as-number {
+          description "AS used within all VRF of the VPN";
+          tailf:info "MPLS VPN AS number.";
+          mandatory true;
+          type uint32;
+        }
+        container ce {
+          leaf device {
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:name";
+            }
+          }
+          container local {
+            uses endpoint-grouping;
+          }
+          container link {
+            uses endpoint-grouping;
+          }
+        }
+
+        container pe {
+          leaf device {
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:name";
+            }
+          }
+          container link {
+            uses endpoint-grouping;
+          }
+        }
+      }
     }
   }
 }
