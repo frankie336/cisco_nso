@@ -1,0 +1,84 @@
+
+<config-template xmlns="http://tail-f.com/ns/config/1.0">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device>
+      <name>{/device}</name>
+      <config>
+        <ip xmlns="urn:ios">
+          <vrf>
+            <name>{/vrf-name}</name>
+            <description>{/vrf-name}</description>
+            <rd>{/rd}</rd>
+            <route-target>
+              <export>
+                <asn-ip>{/export}</asn-ip>
+              </export>
+              <import>
+                <asn-ip>{/import}</asn-ip>
+              </import>
+            </route-target>
+          </vrf>
+        </ip>
+        <interface xmlns="urn:ios">
+          <GigabitEthernet>
+            <name>{/wan-interface-number}</name>
+            <description>{/vrf-name}</description>
+            <encapsulation>
+              <dot1Q>
+                <vlan-id>{/vlan}</vlan-id>
+              </dot1Q>
+            </encapsulation>
+            <ip-vrf>
+              <ip>
+                <vrf>
+                  <forwarding>{/wan-vrf-forwarding}</forwarding>
+                </vrf>
+              </ip>
+            </ip-vrf>
+            <ip>
+              <address>
+                <primary>
+                  <address>{/wan-ip-address}</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+        </interface>
+        <router xmlns="urn:ios">
+          <bgp>
+            <as-no>65000</as-no>
+            <address-family>
+              <with-vrf>
+                <ipv4>
+                  <af>unicast</af>
+                  <vrf>
+                    <name>{/service-name}</name>
+                    <neighbor>
+                      <id>{/ce-ip-address}</id>
+                      <password>
+                        <text>{/bgp-password}</text>
+                      </password>
+                      <as-override/>
+                      <description>{/vrf-name}</description>
+                    </neighbor>
+                    <neighbor>
+                      <id>{/ce-ip-address}</id>
+                      <remote-as>65001</remote-as>
+                      <activate/>
+                    </neighbor>
+                  </vrf>
+                </ipv4>
+              </with-vrf>
+            </address-family>
+          </bgp>
+        </router>
+      </config>
+    </device>
+  </devices>
+</config-template>
+
+
+
+
+

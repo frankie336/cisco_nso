@@ -1,0 +1,16 @@
+<ncs-package xmlns="http://tail-f.com/ns/ncs-packages">
+  <name>mpls-l3vpnv4-pr</name>
+  <package-version>1.0</package-version>
+  <description>Generated Python package</description>
+  <ncs-min-version>5.5</ncs-min-version>
+
+  
+  
+
+  <component>
+    <name>main</name>
+    <application>
+      <python-class-name>mpls_l3vpnv4_pr.main.Main</python-class-name>
+    </application>
+  </component>
+</ncs-package>

@@ -1,0 +1,12 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <services xmlns="http://tail-f.com/ns/ncs">
+    <global-settings>
+      <collect-forward-diff>true</collect-forward-diff>
+    </global-settings>
+  </services>
+  <mpls-l3vpnv4-pr xmlns="http://example.com/mpls-l3vpnv4-pr">
+    <name>33</name>
+    <device>eth</device>
+    <dummy>127.0.0.1</dummy>
+  </mpls-l3vpnv4-pr>
+</config>
