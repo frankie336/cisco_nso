@@ -14,9 +14,9 @@ module mpls-l3vpnv4-pr {
   //Modules must be saved locally with the .yang extension
   import ietf-routing-types {
     prefix rt-types;
-    //revision-date 2017-10-13;
+   
   }
-//
+
 
   import tailf-common {
     prefix tailf;
@@ -57,33 +57,23 @@ module mpls-l3vpnv4-pr {
     
 
     //typedefs here
+    //This section defines local structures that can be referenced by other leafs
+    //and enforced. For example, here I am enforcing vlan numbering to range from 
+    //100 - 4096
     typedef vlan-extended {
      type uint32 {
       range "100 .. 4096";
      }
      description "Extended vlan numbering";
     }
-  
-
     
-    //service name
-    leaf service-name {
-      mandatory true;
-      type string;
-    }
     //vrf name
     leaf vrf-name {
       tailf:info "vrf name";
       mandatory true;
       type string; 
     }
-    //vrf description 
     
-    //leaf vrf-description {
-      //tailf:info "sets a description for the vrf";
-      //mandatory true;
-      //type string;
-    //}
     
     leaf rd {
       tailf:info "Makes overlapping addresses unique";
@@ -96,14 +86,14 @@ module mpls-l3vpnv4-pr {
       tailf:info "Export routes";
       mandatory true;
       type rt-types:route-target;
-      //type string;
+      
 
     }
     leaf import {
       tailf:info "Import routes";
       mandatory true;
       type rt-types:route-target;
-      //type string;
+     
     }
 
     leaf wan-interface-number {
@@ -112,7 +102,7 @@ module mpls-l3vpnv4-pr {
       type string;
 
     }
-
+    
     leaf vlan{
       tailf:info "Sets the vlan number of the wan sub interface";
       mandatory true;
@@ -120,16 +110,9 @@ module mpls-l3vpnv4-pr {
       
     }
 
-    ///leaf wan-description {
-    ///  tailf:info "Wan Interface Desctiption";
-      ///mandatory true;
-      ///type string;
-    ///}
-
-    leaf wan-vrf-forwarding {
-      tailf:info "Places wan interface into vrf";
-      mandatory true;
+    leaf static_route_ip {
       type string;
+      default "169.254.0.0";
     }
 
     leaf wan-ip-address {
@@ -148,12 +131,9 @@ module mpls-l3vpnv4-pr {
       tailf:info "BGP MD5 Password";
       mandatory true;
       type string;
-
-    }
-    leaf description {
-      tailf:info "Describes Bgp peer";
-      mandatory true;
-      type string;
+    
+  
+    
     }
   }
 }

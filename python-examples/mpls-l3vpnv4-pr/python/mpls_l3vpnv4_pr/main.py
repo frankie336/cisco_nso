@@ -1,6 +1,14 @@
 # -*- mode: python; python-indent: 4 -*-
+import threading
+import time
+
 import ncs
 from ncs.application import Service
+
+
+
+   
+
 
 
 # ------------------------
@@ -16,8 +24,22 @@ class ServiceCallbacks(Service):
 
         vars = ncs.template.Variables()
         vars.add('DUMMY', '127.0.0.1')
+        #service.rd = '6501:8'
         template = ncs.template.Template(service)
         template.apply('mpls-l3vpnv4-pr-template', vars)
+
+
+        service.rd = '6501:8'
+        print(service.rd,'++++This is the rd++++')
+
+
+
+
+        
+
+        
+
+        
 
     # The pre_modification() and post_modification() callbacks are optional,
     # and are invoked outside FASTMAP. pre_modification() is invoked before
@@ -50,6 +72,7 @@ class Main(ncs.application.Application):
         # through 'self.log' and is a ncs.log.Log instance.
         self.log.info('Main RUNNING')
 
+
         # Service callbacks require a registration for a 'service point',
         # as specified in the corresponding data model.
         #
@@ -60,6 +83,8 @@ class Main(ncs.application.Application):
 
         # When this setup method is finished, all registrations are
         # considered done and the application is 'started'.
+
+    
 
     def teardown(self):
         # When the application is finished (which would happen if NCS went

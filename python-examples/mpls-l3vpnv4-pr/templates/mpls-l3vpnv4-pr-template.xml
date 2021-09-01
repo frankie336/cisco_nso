@@ -1,4 +1,3 @@
-
 <config-template xmlns="http://tail-f.com/ns/config/1.0">
   <devices xmlns="http://tail-f.com/ns/ncs">
     <device>
@@ -18,6 +17,16 @@
               </import>
             </route-target>
           </vrf>
+          <route>
+            <vrf>
+              <name>{/vrf-name}</name>
+              <ip-route-forwarding-list>
+                <prefix>{/static_route_ip}</prefix>
+                <mask>255.255.255.0</mask>
+                <forwarding-address>10.11.11.1</forwarding-address>
+              </ip-route-forwarding-list>
+            </vrf>
+          </route>
         </ip>
         <interface xmlns="urn:ios">
           <GigabitEthernet>
@@ -31,7 +40,7 @@
             <ip-vrf>
               <ip>
                 <vrf>
-                  <forwarding>{/wan-vrf-forwarding}</forwarding>
+                  <forwarding>{/vrf-name}</forwarding>
                 </vrf>
               </ip>
             </ip-vrf>
@@ -53,7 +62,7 @@
                 <ipv4>
                   <af>unicast</af>
                   <vrf>
-                    <name>{/service-name}</name>
+                    <name>{/vrf-name}</name>
                     <neighbor>
                       <id>{/ce-ip-address}</id>
                       <password>
@@ -77,8 +86,4 @@
     </device>
   </devices>
 </config-template>
-
-
-
-
 
