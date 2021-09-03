@@ -23,17 +23,9 @@ Service mapping in this example is done using a mix of Python and .yang configur
 Below is an example of service input parameters, and resulting  IOS config at the CLI user interface of NSO:
 
 ===Input 
-admin@ncs(config)# mpls-l3vpnv4-pr vpn00007
-Value for 'vrf-name' (<string>): vpn00007
-Value for 'rd' (<string>): 6501:7
-Value for 'export' (<string>): 6501:7
-Value for 'import' (<string>): 6501:7
-Value for 'wan-interface-number' (<string>): 0/0.4
-Value for 'vlan' (<unsignedInt, 100 .. 4096>): 104
-Value for 'wan-ip-address' (<IPv4 address>): 10.0.1.13 255.255.255.252
-Value for 'wan-ip-address' (<IPv4 address>): 10.0.1.13                
-Value for 'ce-ip-address' (<IPv4 address>): 10.0.1.14
-Value for 'bgp-password' (<string>): w*vj`':$
+
+
+
 
 
 == Output config 

@@ -1,0 +1,147 @@
+module zero-touch-mpls-l3vpnv4-pr {
+
+  namespace "http://example.com/zero-touch-mpls-l3vpnv4-pr";
+  prefix zero-touch-mpls-l3vpnv4-pr;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  //External modules are imported by this declaration.
+  //Cisco NSO looks for external modules from local directory: ~nso-5.5/src/ncs/yang
+  //Many IETF modules are available here : http://www.netconfcentral.org/modulelist
+  //Ciso modules are available here: https://github.com/YangModels/yang
+  //Modules must be saved locally with the .yang extension
+  import ietf-routing-types {
+    prefix rt-types;
+
+  }
+
+
+  import tailf-common {
+    prefix tailf;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  description
+    "Bla bla...";
+
+  revision 2016-01-01 {
+    description
+      "Initial revision.";
+  }
+
+
+
+  list zero-touch-mpls-l3vpnv4-pr {
+    description "This is an RFS skeleton service";
+
+    key name;
+    leaf name {
+      tailf:info "Unique service id";
+      tailf:cli-allow-range;
+      type string;
+    }
+
+    uses ncs:service-data;
+    ncs:servicepoint zero-touch-mpls-l3vpnv4-pr-servicepoint;
+
+    // may replace this with other ways of refering to the devices.
+    leaf-list device {
+      type leafref {
+        path "/ncs:devices/ncs:device/ncs:name";
+
+      }
+    }
+    
+
+    //typedefs here
+    //This section defines local structures that can be referenced by other leafs
+    //and enforced. For example, here I am enforcing vlan numbering to range from 
+    //100 - 4096
+    typedef vlan-extended {
+     type uint32 {
+      range "100 .. 4096";
+     }
+     description "Extended vlan numbering";
+    }
+    
+    //vrf name
+    leaf vrf_name {
+      tailf:info "vrf name";
+      //mandatory true;
+      type string;
+      default "vpn169"; 
+    }
+    
+    
+    leaf rd {
+      tailf:info "Makes overlapping addresses unique";
+      //mandatory true;
+      type rt-types:route-distinguisher;
+      default "6501:169";
+      
+
+    }
+    leaf export_r {
+      tailf:info "Export routes";
+      //mandatory true;
+      type rt-types:route-target;
+      default "6501:169";
+      
+
+    }
+    leaf import_r {
+      tailf:info "Import routes";
+      //mandatory true;
+      type rt-types:route-target;
+      default "6501:169";
+     
+    }
+
+    leaf wan_interface_number {
+      tailf:info "CE facing interface";
+     // mandatory true;
+      type string;
+      default "0/0.169";
+
+    }
+    
+    leaf vlan{
+      tailf:info "Sets the vlan number of the wan sub interface";
+      //mandatory true;
+      type vlan-extended;
+      default "169";    
+      
+    }
+
+    leaf static_route_ip {
+      type string;
+      default "169.254.0.0";
+    }
+
+    leaf wan_ip_address {
+      tailf:info "PE interface IP address";
+      //mandatory true;
+      type inet:ipv4-address;
+      default "169.254.0.1";
+
+    }
+
+    leaf ce_ip_address {
+      tailf:info "Valid IP";
+      //mandatory true;
+      type inet:ipv4-address;
+    } 
+    leaf bgp_password {
+      tailf:info "BGP MD5 Password";
+      //mandatory true;
+      type binary;
+      default "donotusethispassword";
+    
+    
+    }
+  }
+}
