@@ -25,10 +25,7 @@ Below is an example of service input parameters, and resulting  IOS config at th
 ===Input 
 
 
-
-
-
-== Output config 
+== Output config
 ip vrf vpn00007
   description vpn00007
   rd 6501:7

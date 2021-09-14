@@ -1,16 +1,14 @@
 # -*- mode: python; python-indent: 4 -*-
 import ncs
-from ncs.application import Service
 import requests
-import json
-
+from ncs.application import Service
 
 """
 This class makes REST calls to an SQL Database that contains 
 some useful data about the mpls vpn service:
 """
 
-class GetMpls:
+class MplsData:
     def __init__(self,service_name):
 
         self.service_name = service_name
@@ -33,12 +31,12 @@ class ServiceCallbacks(Service):
     def cb_create(self, tctx, root, service, proplist):
         self.log.info('Service create(service=', service._path, ')')
 
-        mympls = GetMpls(service_name=service.name)
+        mympls = MplsData(service_name=service.name)
         ext_vpn_data = mympls.get_mpls()
         service.vrf_name = service.name # Set the vrf name to the nso service name
         service.wan_ip_address = ext_vpn_data[0]['PeWanIPAddress']#Get the WAN IP from REST query
         service.ce_ip_address = ext_vpn_data[0]['CeWanIPAddress']#Get the ce IP address from a REST query
-        #service.ce_ip_address = ext_vpn_data[0]['BgpPassword'] #Get the BGP password from REST query
+        service.ce_ip_address = ext_vpn_data[0]['BgpPassword'] #Get the BGP password from REST query
         service.wan_interface_number = ext_vpn_data[0]['PeInterface']#Get the Wan interface from REST query
         service.vlan = ext_vpn_data[0]['WanVlan'] #Get the vlan from REST query
         service.rd = '6501:'+ext_vpn_data[0]['WanVlan']
