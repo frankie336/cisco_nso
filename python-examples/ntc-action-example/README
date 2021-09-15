@@ -1,23 +1,41 @@
-This is a generated Python package, made by:
 
-  ncs-make-package --service-skeleton python \
-                   --component-class main.Main ntc-action-example
+Generate A Network Topology Diagram Using A Cisco NSO Action 
 
-It contains a dummy YANG model which implements a minimal Service
-and an Action that doesn't really do anything useful. They are
-there just to get you going.
+This package provides an example of a Cisco NSO Action, ‘draw’.
+ ~/packages/ntc-action-example/python/ntc_action_example/main.py implements an action sequence that will :
+- Run show commands [cisco-ios: “show lldp nei detail”] per NSO device 
+- Parse and normalize received output into structured data 
+- Convert data into a “topology.js” file ready to be used in the Cisco Next UI automated diagram API: https://developer.cisco.com/site/neXt/
+- For now, integrating the “topology.js” into Next UI is beyond the scope of this example·
 
-You will also find two test cases in:
 
-  test/internal/lux/service/
-  test/internal/lux/action/
-
-that you can run if you have the 'lux' testing tool.
-Your top Makefile also need to implement some Make targets
-as described in the Makefiles of the test cases.
-You can also just read the corresponding run.lux tests and
-do them manually if you wish.
-
-The 'lux' test tool can be obtained from:
-
-  https://github.com/hawk/lux.git
+├── load-dir
+│   └── ntc-action-example.fxs
+├── package-meta-data.xml
+├── python
+│   └── ntc_action_example
+│       ├── __init__.py
+│       └── main.py
+├── README
+├── src
+│   ├── java
+│   │   └── src
+│   ├── Makefile
+│   └── yang
+│       └── ntc-action-example.yang
+├── templates
+└── test
+    ├── internal
+    │   ├── lux
+    │   │   ├── action
+    │   │   │   ├── Makefile
+    │   │   │   └── run.lux
+    │   │   ├── Makefile
+    │   │   └── service
+    │   │       ├── dummy-device.xml
+    │   │       ├── dummy-service.xml
+    │   │       ├── Makefile
+    │   │       ├── pyvm.xml
+    │   │       └── run.lux
+    │   └── Makefile
+    └── Makefile
