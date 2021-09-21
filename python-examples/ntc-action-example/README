@@ -2,11 +2,16 @@
 Generate A Network Topology Diagram Using A Cisco NSO Action 
 
 This package provides an example of a Cisco NSO Action, ‘draw’.
- ~/packages/ntc-action-example/python/ntc_action_example/main.py implements an action sequence that will :
-- Run show commands [cisco-ios: “show lldp nei detail”] per NSO device 
+Cisco NextUI: https://developer.cisco.com/site/neXt/ javascript API uses a .topology file to map nodes and graphs into a topologu graph.
+This package uses information information from the IOS: "show lldp neighbor detail":
+
 - Parse and normalize received output into structured data 
 - Convert data into a “topology.js” file ready to be used in the Cisco Next UI automated diagram API: https://developer.cisco.com/site/neXt/
 - For now, integrating the “topology.js” into Next UI is beyond the scope of this example·
+
+
+
+
 
 
 ├── load-dir
